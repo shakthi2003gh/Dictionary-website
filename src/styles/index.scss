@@ -1,0 +1,12 @@
+@forward "utilities";
+
+body {
+  min-height: 100dvh;
+  color: var(--text);
+  background: var(--bg);
+}
+
+.container {
+  max-width: 800px;
+  margin-inline: auto;
+}

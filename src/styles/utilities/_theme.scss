@@ -1,0 +1,18 @@
+:root {
+  --primary-700: hwb(275 27% 7%);
+  --primary-300: hwb(275 27% 7% / 0.4);
+  --gray-700: hwb(0 46% 54%);
+  --gray-300: hwb(0 46% 54% / 0.4);
+  --white: hwb(0 100% 0%);
+  --black: hwb(0 2% 98%);
+
+  [theme="light"] {
+    --text: var(--black);
+    --bg: var(--white);
+  }
+
+  [theme="dark"] {
+    --text: var(--white);
+    --bg: var(--black);
+  }
+}

@@ -31,6 +31,12 @@ export function useFont() {
   return { font, fonts, setFont };
 }
 
+export function useSearch() {
+  const { data, setSearch } = useContext(StateContext) as StateT;
+
+  return { data, setSearch };
+}
+
 export default function StateProvider({ children }: PropT): any {
   const fonts = ["Roboto", "Poppins", "Noto Sans"];
   const [font, dispatchFont] = useState(fonts[0]);

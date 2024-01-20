@@ -1,0 +1,60 @@
+.theme-toggle {
+  --clr: var(--gray-700);
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--clr);
+
+  [theme="dark"] & {
+    --clr: var(--primary-700);
+  }
+
+  .toggle {
+    position: relative;
+    width: 45px;
+    height: 25px;
+    border-radius: 100px;
+    background-color: var(--clr);
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: 1px dashed var(--text);
+    }
+
+    &::after {
+      position: absolute;
+      inset: 3px;
+      content: "";
+      height: 19px;
+      aspect-ratio: 1;
+      border-radius: 100px;
+      background-color: var(--white);
+
+      [theme="dark"] & {
+        left: auto;
+      }
+    }
+  }
+
+  .icon {
+    font-size: 1.3rem;
+  }
+
+  @media (min-width: 500px) {
+    gap: 10px;
+
+    .toggle {
+      width: 50px;
+      height: 28px;
+
+      &::after {
+        height: 22px;
+      }
+    }
+
+    .icon {
+      font-size: 1.8rem;
+    }
+  }
+}

@@ -1,0 +1,29 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  padding: 1rem;
+  overflow: hidden;
+
+  .logo {
+    flex-shrink: 0;
+    font-size: 1.8rem;
+    color: var(--text);
+
+    @media (min-width: 500px) {
+      font-size: 2.2rem;
+    }
+  }
+
+  .group {
+    display: flex;
+    gap: 0.9rem;
+
+    .line {
+      width: 1px;
+      height: 30px;
+      background-color: var(--gray-700);
+    }
+  }
+}

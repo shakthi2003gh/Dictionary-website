@@ -8,7 +8,17 @@ body {
   background: var(--bg);
 
   main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    min-height: calc(100dvh - 62px);
     padding: 1rem;
+    overflow: hidden auto;
+
+    @media (min-width: 500px) {
+      gap: 1.8rem;
+      min-height: calc(100dvh - 67.19px);
+    }
   }
 }
 

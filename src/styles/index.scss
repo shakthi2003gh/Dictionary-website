@@ -2,6 +2,15 @@
 @forward "components";
 @forward "layouts";
 
+html {
+  user-select: text;
+  -webkit-tap-highlight-color: transparent;
+
+  ::selection {
+    background-color: var(--primary-300);
+  }
+}
+
 body {
   min-height: 100dvh;
   color: var(--text);

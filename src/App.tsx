@@ -1,4 +1,5 @@
 import Header from "./layouts/header";
+import Result from "./layouts/result";
 import SearchBar from "./components/searchBar";
 
 function App() {
@@ -8,6 +9,8 @@ function App() {
 
       <main>
         <SearchBar />
+
+        <Result />
       </main>
     </div>
   );

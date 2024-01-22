@@ -1,53 +1,52 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { ReactNode } from "react";
+import axios, { AxiosError } from "axios";
+import { DataType, ErrorType, PropType, StateType } from "./types";
 
-type StateT = {
-  font: string;
-  fonts: string[];
-  theme: string;
-  search: string;
-  data: {} | null;
-  toggleTheme: () => void;
-  setFont: (font: string) => void;
-  setSearch: (search: string) => void;
-  setData: (data: any) => void;
-};
+const ENDPOINT = "https://api.dictionaryapi.dev/api/v2/entries/en/";
+const THEME = localStorage.getItem("theme");
 
-type PropT = {
-  children: ReactNode;
-};
-
-const StateContext = createContext<StateT | {}>({});
+const StateContext = createContext<StateType | {}>({});
 
 export function useTheme() {
-  const { theme, toggleTheme } = useContext(StateContext) as StateT;
+  const { theme, toggleTheme } = useContext(StateContext) as StateType;
 
   return { theme, toggleTheme };
 }
 
 export function useFont() {
-  const { font, fonts, setFont } = useContext(StateContext) as StateT;
+  const { font, fonts, setFont } = useContext(StateContext) as StateType;
 
   return { font, fonts, setFont };
 }
 
 export function useSearch() {
-  const { data, setSearch } = useContext(StateContext) as StateT;
+  const context = useContext(StateContext) as StateType;
+  const { data, search, setSearch, handleSearch } = context;
+  const { error } = context;
 
-  return { data, setSearch };
+  return { data, search, setSearch, handleSearch, error };
 }
 
-export default function StateProvider({ children }: PropT): any {
+export function useLoading() {
+  const { isLoading } = useContext(StateContext) as StateType;
+
+  return isLoading;
+}
+
+export default function StateProvider({ children }: PropType): any {
   const fonts = ["Roboto", "Poppins", "Noto Sans"];
   const [font, dispatchFont] = useState(fonts[0]);
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState(THEME || "light");
   const [search, setSearch] = useState("");
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<DataType | null>(null);
+  const [error, setError] = useState<ErrorType>(null);
+  const [isLoading, setLoading] = useState(false);
 
   const toggleTheme = () => {
     setTheme((prev) => {
       const theme = prev === "light" ? "dark" : "light";
 
+      localStorage.setItem("theme", theme);
       document.body.setAttribute("theme", theme);
       return theme;
     });
@@ -58,6 +57,33 @@ export default function StateProvider({ children }: PropT): any {
 
     document.body.setAttribute("font", font);
     dispatchFont(font);
+  };
+
+  const handleSearch = (value: string = search) => {
+    if (value === data?.word) return;
+    if (!value.trim().length) return;
+
+    if (value !== search) setSearch(value);
+
+    setLoading(true);
+    setData(null);
+    setError(null);
+
+    axios
+      .get(ENDPOINT + value)
+      .then(({ data }) => setData(data[0]))
+      .catch(handleError)
+      .finally(() => setLoading(false));
+  };
+
+  const handleError = (error: AxiosError) => {
+    let payload = undefined;
+    const { code, response } = error;
+
+    if (code == "ERR_NETWORK") payload = { status: 504, searchedWord: search };
+    if (response) payload = { status: response.status, searchedWord: search };
+
+    setError(payload);
   };
 
   useEffect(() => {
@@ -71,9 +97,12 @@ export default function StateProvider({ children }: PropT): any {
     theme,
     search,
     data,
+    error,
+    isLoading,
     toggleTheme,
     setFont,
     setSearch,
+    handleSearch,
     setData,
   };
 

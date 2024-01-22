@@ -21,27 +21,54 @@
     color: inherit;
   }
 
+  .button-group {
+    display: flex;
+  }
+
   button {
     display: grid;
     place-content: center;
-    font-size: 1.2rem;
     padding: 0.5rem 0.6rem;
-    color: var(--white);
-    background-color: var(--primary-700);
+    font-size: 1.2rem;
 
-    &:disabled {
-      opacity: 0.5;
+    &.primary {
+      color: var(--white);
+      background-color: var(--primary-700);
+
+      &:disabled {
+        opacity: 0.5;
+      }
+    }
+
+    &.secondary {
+      color: var(--text);
+
+      &:disabled {
+        display: none;
+      }
     }
   }
 
   @media (hover: hover) {
     button {
-      color: var(--primary-700);
-      background-color: transparent;
+      &.primary {
+        color: var(--primary-700);
+        background-color: transparent;
 
-      &:not(:disabled):is(:hover, :focus-visible) {
-        color: var(--white);
-        background-color: var(--primary-700);
+        &:not(:disabled):is(:hover, :focus-visible) {
+          color: var(--white);
+          background-color: var(--primary-700);
+        }
+      }
+
+      &.secondary {
+        opacity: 0.5;
+
+        &:not(:disabled):is(:hover, :focus-visible) {
+          color: var(--text);
+          background-color: var(--gray-300);
+          opacity: 1;
+        }
       }
     }
   }

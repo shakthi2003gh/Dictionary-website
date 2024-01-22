@@ -72,16 +72,16 @@ export default function StateProvider({ children }: PropType): any {
     axios
       .get(ENDPOINT + value)
       .then(({ data }) => setData(data[0]))
-      .catch(handleError)
+      .catch(handleError(value))
       .finally(() => setLoading(false));
   };
 
-  const handleError = (error: AxiosError) => {
+  const handleError = (value: string) => (error: AxiosError) => {
     let payload = undefined;
     const { code, response } = error;
 
-    if (code == "ERR_NETWORK") payload = { status: 504, searchedWord: search };
-    if (response) payload = { status: response.status, searchedWord: search };
+    if (code == "ERR_NETWORK") payload = { status: 504, searchedWord: value };
+    if (response) payload = { status: response.status, searchedWord: value };
 
     setError(payload);
   };

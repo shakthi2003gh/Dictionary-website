@@ -8,7 +8,7 @@ export default function ErrorSection() {
   const { status, searchedWord } = error || { status: "", searchedWord: "" };
 
   const handleRetry = () => {
-    handleSearch();
+    handleSearch(searchedWord);
   };
 
   const classname = () => {

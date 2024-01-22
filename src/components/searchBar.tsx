@@ -1,4 +1,5 @@
 import { ChangeEvent, FormEvent } from "react";
+import { MdOutlineClear } from "react-icons/md";
 import { IoSearchSharp } from "react-icons/io5";
 import { useSearch } from "../state";
 
@@ -11,6 +12,12 @@ export default function SearchBar() {
     setSearch(e.target.value);
   };
 
+  const handleReset = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    setSearch("");
+  };
+
   const handleSumbit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -18,17 +25,28 @@ export default function SearchBar() {
   };
 
   return (
-    <form className="search-bar" onSubmit={handleSumbit}>
+    <form className="search-bar" onReset={handleReset} onSubmit={handleSumbit}>
       <input
+        name="search"
         type="text"
         placeholder="Type any word"
         value={search}
         onChange={handleType}
       />
 
-      <button type="submit" disabled={isSearchEmpty || isAlreadySearched}>
-        <IoSearchSharp />
-      </button>
+      <div className="button-group">
+        <button type="reset" className="secondary" disabled={isSearchEmpty}>
+          <MdOutlineClear />
+        </button>
+
+        <button
+          type="submit"
+          className="primary"
+          disabled={isSearchEmpty || isAlreadySearched}
+        >
+          <IoSearchSharp />
+        </button>
+      </div>
     </form>
   );
 }

@@ -15,7 +15,7 @@ export default function ThemeToggle() {
   return (
     <div className="theme-toggle">
       <label className="toggle" tabIndex={0} onKeyUp={handleToggle}>
-        <input type="checkbox" onChange={toggleTheme} hidden />
+        <input name="theme" type="checkbox" onChange={toggleTheme} hidden />
       </label>
 
       {isDarkTheme ? (

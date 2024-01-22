@@ -9,7 +9,7 @@ export default function FontDropDown() {
   };
 
   return (
-    <select className="font-dropdown" onChange={handleSelection}>
+    <select name="font" className="font-dropdown" onChange={handleSelection}>
       {fonts.map((font) => (
         <option key={font} value={font}>
           {font}

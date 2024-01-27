@@ -7,7 +7,7 @@ export default function SearchBar() {
   const inputRef = useRef<HTMLInputElement>(null);
   const { data, search, setSearch, handleSearch } = useSearch();
   const isSearchEmpty = !search.trim().length;
-  const isAlreadySearched = search === data?.word;
+  const isAlreadySearched = search.toLowerCase() === data?.word.toLowerCase();
 
   const handleType = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);

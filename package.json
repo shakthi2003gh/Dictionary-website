@@ -2,7 +2,7 @@
   "name": "frontendmentor-dictionary",
   "homepage": "https://shakthi2003gh.github.io/Dictionary-website/",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",

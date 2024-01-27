@@ -1,9 +1,10 @@
-import { ChangeEvent, FormEvent } from "react";
+import { ChangeEvent, FormEvent, useRef } from "react";
 import { MdOutlineClear } from "react-icons/md";
 import { IoSearchSharp } from "react-icons/io5";
 import { useSearch } from "../state";
 
 export default function SearchBar() {
+  const inputRef = useRef<HTMLInputElement>(null);
   const { data, search, setSearch, handleSearch } = useSearch();
   const isSearchEmpty = !search.trim().length;
   const isAlreadySearched = search === data?.word;
@@ -16,17 +17,20 @@ export default function SearchBar() {
     e.preventDefault();
 
     setSearch("");
+    inputRef.current?.focus();
   };
 
   const handleSumbit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     handleSearch();
+    inputRef.current?.blur();
   };
 
   return (
     <form className="search-bar" onReset={handleReset} onSubmit={handleSumbit}>
       <input
+        ref={inputRef}
         name="search"
         type="text"
         placeholder="Type any word"
